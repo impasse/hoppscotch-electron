@@ -16,6 +16,7 @@ async function createWindow() {
             allowRunningInsecureContent: true,
             partition: 'persist:hoppscotch',
             nativeWindowOpen: true,
+            defaultFontSize: 14,
         },
     });
     win.maximize();
