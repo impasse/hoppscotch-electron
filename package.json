@@ -1,6 +1,6 @@
 {
   "name": "hoppscotch-electron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -20,7 +20,8 @@
     "electron": "^13.1.5"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-window-state": "^5.0.3"
   },
   "config": {
     "forge": {
@@ -28,7 +29,10 @@
         "name": "Hoppscotch",
         "icon": "./assets/icon",
         "overwrite": true,
-        "platforms": ["darwin", "win32"]
+        "platforms": [
+          "darwin",
+          "win32"
+        ]
       },
       "makers": [
         {

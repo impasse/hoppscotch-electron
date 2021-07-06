@@ -1,12 +1,16 @@
 const { app, BrowserWindow } = require('electron');
+const windowStateKeeper = require('electron-window-state');
 
 app.setName('Hoppscotch');
 
-async function createWindow() {
+let windowState;
+
+async function createWindow({ x, y, width, height }) {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        center: true,
+        x,
+        y,
+        width,
+        height,
         show: false,
         webPreferences: {
             webSecurity: false,
@@ -19,21 +23,28 @@ async function createWindow() {
             defaultFontSize: 14,
         },
     });
-    win.maximize();
     await win.loadURL('https://hoppscotch.io');
     win.show();
+    return win;
 }
 
-app.whenReady().then(() => {
-    createWindow();
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
 });
 
 app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
+        createWindow(windowState)
+            .then(windowState.manage);
     }
 });
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
+app.whenReady().then(() => {
+    windowState = windowStateKeeper({
+        defaultWidth: 1000,
+        defaultHeight: 800,
+        maximize: true,
+    });
+    createWindow(windowState)
+        .then(windowState.manage);
 });
